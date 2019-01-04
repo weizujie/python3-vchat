@@ -10,11 +10,9 @@ import requests
 import tempfile
 import urllib.request
 import speech_recognition
-import pygame
 from bs4 import BeautifulSoup
 
 r = speech_recognition.Recognizer()
-pygame.mixer.init()
 
 class iTing:
     def __init__(self, cu_id, api_key, api_secert):
@@ -72,11 +70,7 @@ class iTing:
         with speech_recognition.Microphone() as sorce:
             r.adjust_for_ambient_noise(sorce)
             audio = r.listen(sorce)
-            try:
-                lisen = r.recognize_google(audio, language="zh-TW")
-                return lisen
-            except:
-                print("你咋不说话呢")
+            return r.recognize_google(audio, language="zh-TW")
 
     def speak(self, sentence):
         with tempfile.NamedTemporaryFile(delete=True) as fp:
