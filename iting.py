@@ -2,6 +2,7 @@
 
 import os
 import re
+import sys
 import json
 import time
 import urllib
@@ -13,6 +14,7 @@ import speech_recognition
 from bs4 import BeautifulSoup
 
 r = speech_recognition.Recognizer()
+tuling_apikey = "d66e74574d564824a05463341a124829"
 
 class iTing:
     def __init__(self, cu_id, api_key, api_secert):
@@ -123,6 +125,12 @@ class iTing:
 
         return score_list
             
+    def tuling(self, info):
+        url = 'http://www.tuling123.com/openapi/api?key=' + tuling_apikey + '&info=' + info
+        res = requests.get(url)
+        res.encoding = 'utf-8'
+        jd = json.loads(res.text)
+        print('iTing: '+jd['text'])
 
 if __name__ == "__main__":
     # 我的api_key,供大家测试用，在实际工程中请换成自己申请的应用的key和secert
@@ -130,20 +138,13 @@ if __name__ == "__main__":
     api_secert = "jGHEw8v29Tr5UFuQTokQLKMI8yTXPpMM"
     # 初始化
     bdr = iTing("iTing v0.0.1", api_key, api_secert)
-    print("请说话")
     
-    qa = {
-        '你好啊'  : '谢谢您，祝您生活愉快',
-        '我帅吗'  : '帅得一匹',
-        '你是谁'  : '我是超级无敌可爱的iTing',
-    }
-    
-    lisen = bdr.lisenTo()
-    print("你说的话: " + lisen)
-    if (lisen == '查询成绩'):
-        print('-'*30)
-        score_list = bdr.get_score(17990425, 110013)
-        for eve_score in score_list:
-            print(eve_score)
-    else:
-        bdr.speak(qa.get(lisen, '你在说尼玛呢'))
+    while True:
+        print("----请说话----")
+        lisen = bdr.lisenTo()
+        print('我:' + lisen)
+        bdr.tuling(lisen)
+        time.sleep(3)
+        if (lisen == '再见'):
+            sys.exit()
+
