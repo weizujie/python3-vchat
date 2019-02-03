@@ -11,10 +11,9 @@ import requests
 import tempfile
 import urllib.request
 import speech_recognition
+from aip import AipSpeech
 from bs4 import BeautifulSoup
 
-r = speech_recognition.Recognizer()
-tuling_apikey = "d66e74574d564824a05463341a124829"
 
 class iTing:
     def __init__(self, cu_id, api_key, api_secert):
@@ -31,7 +30,7 @@ class iTing:
 
     def getToken(self, api_key, api_secert):
         # 1.获取token
-        token_url = self.token_url % (api_key,api_secert)
+        token_url = self.token_url % (api_key, api_secert)
 
         r_str = urllib.request.urlopen(token_url).read()
         token_data = json.loads(r_str)
@@ -45,7 +44,7 @@ class iTing:
         # voice_data = urllib.request.urlopen(get_url).read()
         voice_data = requests.get(get_url).content
         # 3.处理返回数据
-        voice_fp = open(filename,'wb+')
+        voice_fp = open(filename, 'wb+')
         voice_fp.write(voice_data)
         voice_fp.close()
         pass
@@ -59,26 +58,14 @@ class iTing:
         data['channel'] = 1
         data['cuid'] = self.cu_id
         data['token'] = self.token_str
-        wav_fp = open(filename,'rb')
+        wav_fp = open(filename, 'rb')
         voice_data = wav_fp.read()
         data['len'] = len(voice_data)
         data['speech'] = base64.b64encode(voice_data).decode('utf-8')
         post_data = json.dumps(data)
-        r_data = urllib.request.urlopen(self.upvoice_url,data=bytes(post_data,encoding="utf-8")).read()
+        r_data = urllib.request.urlopen(self.upvoice_url, data=bytes(post_data, encoding="utf-8")).read()
         # 3.处理返回数据
         return json.loads(r_data)['result']
-
-    def lisenTo(self):
-        with speech_recognition.Microphone() as sorce:
-            r.adjust_for_ambient_noise(sorce)
-            audio = r.listen(sorce)
-            return r.recognize_google(audio, language="zh-TW")
-
-    def speak(self, sentence):
-        with tempfile.NamedTemporaryFile(delete=True) as fp:
-            bdr.getVoice(text=sentence, filename='{}.wav'.format(fp.name))
-            print('回答：' + sentence)
-            os.system("start {}.wav".format(fp.name))
 
     def get_score(self, textUserID, textPasswd):
         login_URL = 'http://222.30.63.15/NKEMIS/SystemLogin.aspx'
@@ -118,33 +105,31 @@ class iTing:
             re.S)
         score_items = re.findall(score, score_html.text)
 
-
         score_list = []
         for title_item, score_item in zip(title_items, score_items):
-            score_list.append(title_item.replace("\r", "").replace("\t", "").replace("\n", "") + score_item.replace("</td>", ""))
+            score_list.append(
+                title_item.replace("\r", "").replace("\t", "").replace("\n", "") + score_item.replace("</td>", ""))
 
         return score_list
-            
+
     def tuling(self, info):
-        url = 'http://www.tuling123.com/openapi/api?key=' + tuling_apikey + '&info=' + info
+        url = 'http://www.tuling123.com/openapi/api?key=' + TULING_APIKEY + '&info=' + info
         res = requests.get(url)
         res.encoding = 'utf-8'
         jd = json.loads(res.text)
-        print('iTing: '+jd['text'])
+        print('iTing: ' + jd['text'])
+        return jd['text']
+
 
 if __name__ == "__main__":
     # 我的api_key,供大家测试用，在实际工程中请换成自己申请的应用的key和secert
-    api_key = "R93YzrozkK8VLeACtVGm4wMc" 
-    api_secert = "jGHEw8v29Tr5UFuQTokQLKMI8yTXPpMM"
+    cu_id = '15179831'
+    api_key = 'R93YzrozkK8VLeACtVGm4wMc'
+    api_secert = 'jGHEw8v29Tr5UFuQTokQLKMI8yTXPpMM'
+    TULING_APIKEY = "d66e74574d564824a05463341a124829"
+
     # 初始化
     bdr = iTing("iTing v0.0.1", api_key, api_secert)
-    
-    while True:
-        print("----请说话----")
-        lisen = bdr.lisenTo()
-        print('我:' + lisen)
-        bdr.tuling(lisen)
-        time.sleep(3)
-        if (lisen == '再见'):
-            sys.exit()
+    client = AipSpeech(cu_id, api_key, api_secert)
+
 
