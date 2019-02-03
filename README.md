@@ -2,11 +2,20 @@
 
 我也不知道这个算是什么类型的程序....
 
+以前写过的一些程序的整合
+
+
+
 程序主界面
+
 ![](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/Homewindow.jpg)
 
 用户界面
+
 ![](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/userwindow.jpg)
+
+
+
 
 
 
