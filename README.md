@@ -11,11 +11,13 @@
 
 
 
-## 界面显示
-![登录界面](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/Home_window.png)
+## 程序界面预览
+**登录界面**
+![](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/Home_window.png)
 
 
-![用户界面](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/user_window.png)
+**用户界面**
+![](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/user_window.png)
 
 
 
