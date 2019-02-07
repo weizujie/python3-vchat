@@ -2,11 +2,14 @@
 
 **基于 Python + Tkinter 的只能语音聊天程序**
 
-## 使用方法
-- 登录
-- 点击"开始聊天"
-- 说话
-- OK
+## 待完善的功能
+- [x] 登录
+- [] 点击"开始聊天"然后说话
+- [x] 将回答显示到界面上
+
+
+
+
 
 
 ![登录界面](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/Home_window.png)
