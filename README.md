@@ -3,6 +3,10 @@
 **基于 Python + Tkinter 的只能语音聊天程序**
 
 
+![登录界面](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/Home_window.png)
+
+
+![用户界面](https://raw.githubusercontent.com/FatTig3R/iTing-Gui/master/user_window.png)
 
 
 
