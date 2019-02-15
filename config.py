@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 19-2-15 下午10:32
+# @Author  : Jie
+# @Site    : https://www.jianshu.com/u/ce9c158c2fa4
+# @File    : config.py
+# @Software: PyCharm Community Edition
+
 import pyaudio
 APP_ID = '15179831'
 API_KEY = 'R93YzrozkK8VLeACtVGm4wMc'

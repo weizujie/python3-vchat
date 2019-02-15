@@ -1,8 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 19-2-15 下午10:31
+# @Author  : Jie
+# @Site    : https://www.jianshu.com/u/ce9c158c2fa4
+# @File    : main.py
+# @Software: PyCharm Community Edition
+
 import pickle
 import tkinter as tk
 import wave
 import json
-import time
 import requests
 import numpy as np
 from aip import AipSpeech
@@ -161,8 +168,7 @@ class Iting:
         res = aipSpeech.asr(self.get_file_content(WAVE_OUTPUT_FILENAME), 'wav', 16000, {'lan': 'zh', })
         if res["err_msg"] == "success.":
             tk.Label(usr_window, text=res["result"][0], font=('软体雅黑', 12)).place(x=100, y=250)
-            cont = requests.get(
-                'http://www.tuling123.com/openapi/api?key=' + TULING_APIKEY + '&info=%s' % (res["result"][0],)).content
+            cont = requests.get('http://www.tuling123.com/openapi/api?key=' + TULING_APIKEY + '&info=%s' % (res["result"][0],), timeout=30).content
             m = json.loads(cont)
             var = m['text']
             #tk.Label(usr_window, text=var, font=('软体雅黑', 12)).pack()
