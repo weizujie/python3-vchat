@@ -1,6 +1,6 @@
 # iTing 
 
-**基于 Python + Tkinter 的只能语音聊天程序**
+**基于 Python + Tkinter 的智能语音聊天程序**
 
 ## TODO-LIST
 - [x] 用户登录
