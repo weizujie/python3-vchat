@@ -21,6 +21,7 @@ class Iting:
 
     def __init__(self):
 
+
         # home window
         self.home_window = tk.Tk()
         self.home_window.title('iTing v0.0.1')
@@ -77,8 +78,8 @@ class Iting:
                 usr_window.geometry('500x300')
 
 
-                lb = tk.Listbox(usr_window, width=70, height=14, font=('软体雅黑', 10))
-                tk.Button(usr_window, text='开始聊天', font=('软体雅黑', 12), command=self.tuling).place(x=10, y=250)
+                lb = tk.Listbox(usr_window, width=70, height=14)
+                tk.Button(usr_window, text='开始聊天', command=self.tuling).place(x=10, y=250)
 
 
             elif usr_pwd not in usrs_info:
@@ -167,11 +168,11 @@ class Iting:
     def tuling(self):
         res = aipSpeech.asr(self.get_file_content(WAVE_OUTPUT_FILENAME), 'wav', 16000, {'lan': 'zh', })
         if res["err_msg"] == "success.":
-            tk.Label(usr_window, text=res["result"][0], font=('软体雅黑', 12)).place(x=100, y=250)
+            tk.Label(usr_window, text=res["result"][0]).place(x=100, y=250)
             cont = requests.get('http://www.tuling123.com/openapi/api?key=' + TULING_APIKEY + '&info=%s' % (res["result"][0],), timeout=30).content
             m = json.loads(cont)
             var = m['text']
-            #tk.Label(usr_window, text=var, font=('软体雅黑', 12)).pack()
+            #tk.Label(usr_window, text=var).pack()
             lb.insert(0, var)
             lb.pack()
             # print("iTing: ", m['text'])
