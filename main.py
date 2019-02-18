@@ -18,6 +18,7 @@ from tkinter import messagebox
 from config import *
 import pygame
 import time
+import tempfile
 
 
 class Iting:
@@ -171,7 +172,6 @@ class Iting:
         wf.writeframes(b''.join(frames))
         wf.close()
 
-
     def get_file_content(self, filePath):
         with open(filePath, 'rb') as fp:
             return fp.read()
@@ -193,10 +193,11 @@ class Iting:
             # print("iTing: ", m['text'])
 
             # text to audio
-            self.textToAudio(var)
+            mp3File = self.textToAudio(var)
+            # print(mp3File)
 
             # play audio
-            self.playAudio('TulingAudio.mp3')
+            self.playAudio(mp3File)
 
     def textToAudio(self, content):
 
@@ -205,15 +206,19 @@ class Iting:
         })
 
         if not isinstance(result, dict):
-            with open('TulingAudio.mp3', 'wb') as fp:
-                fp.write(result)
-
+            filename = tempfile.TemporaryFile(mode='w+').name + '.mp3'
+            with open(filename, 'wb+') as f:
+                f.write(result)
+                f.close()
+        return filename
 
     def playAudio(self, filename):
         pygame.mixer.music.load(filename)
         time.sleep(1)
         pygame.mixer.music.play()
-
+    
+        time.sleep(1)
+        os.remove(filename)
 
     def monitor(self):
         p = pyaudio.PyAudio()
@@ -253,7 +258,6 @@ class Iting:
         stream.stop_stream()
         stream.close()
         p.terminate()
-
 
 if __name__ == '__main__':
 
