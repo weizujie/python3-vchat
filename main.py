@@ -16,7 +16,8 @@ import numpy as np
 from aip import AipSpeech
 from tkinter import messagebox
 from config import *
-#from iTing.config import *
+import pygame
+import time
 
 
 class Iting:
@@ -191,6 +192,29 @@ class Iting:
             lb.pack()
             # print("iTing: ", m['text'])
 
+            # text to audio
+            self.textToAudio(var)
+
+            # play audio
+            self.playAudio('TulingAudio.mp3')
+
+    def textToAudio(self, content):
+
+        result  = aipSpeech.synthesis(content, 'zh', 1, {
+            'per':1,
+        })
+
+        if not isinstance(result, dict):
+            with open('TulingAudio.mp3', 'wb') as fp:
+                fp.write(result)
+
+
+    def playAudio(self, filename):
+        pygame.mixer.music.load(filename)
+        time.sleep(1)
+        pygame.mixer.music.play()
+
+
     def monitor(self):
         p = pyaudio.PyAudio()
         stream = p.open(format=FORMAT,
@@ -232,6 +256,9 @@ class Iting:
 
 
 if __name__ == '__main__':
+
+    pygame.mixer.init()
+
     # create admin user
     with open('./usrs_info.pickle', 'wb') as fp:
         usrs_info = {'admin': 'admin'}
