@@ -6,6 +6,7 @@
 # @File    : main.py
 # @Software: PyCharm Community Edition
 
+import os
 import pickle
 import tkinter as tk
 import wave
@@ -15,6 +16,7 @@ import numpy as np
 from aip import AipSpeech
 from tkinter import messagebox
 from config import *
+#from iTing.config import *
 
 
 class Iting:
@@ -58,14 +60,18 @@ class Iting:
         usr_pwd = self.var_usr_pwd.get()
 
         try:
-            with open('usrs_info.pickle', 'rb') as fp:
+            with open('./usrs_info.pickle', 'rb') as fp:
                 usrs_info = pickle.load(file=fp)
 
         except FileNotFoundError as e:
-            with open('usrs_info.pickle', 'wb') as fp:
-                usrs_info = {'a': 'a'}
-                # 将usrs_info封装到usrs.info.pickle文件里
-                pickle.dump(obj=usrs_info, file=fp)  # obj表示要封装的对象, file表示obj要写入的对象, file必须以wb形式打开
+                print("Error reson: ", e)
+                """
+                with open('./usrs_info.pickle', 'wb') as fp:
+                    usrs_info = {'a': 'a'}
+                    # 将usrs_info封装到usrs.info.pickle文件里
+                    pickle.dump(obj=usrs_info, file=fp)  # obj表示要封装的对象, file表示obj要写入的对象, file必须以wb形式打开
+                    print(usrs_info)		
+                """
 
         if usr_name == '' or usr_pwd == '':
             messagebox.showerror(title='Error', message='用户名或密码不能为空!')
@@ -93,7 +99,7 @@ class Iting:
             npf = new_pwd_confirm.get()
             nn = new_name.get()
 
-            with open('usrs_info.pickle', 'rb') as usr_file:
+            with open('./usrs_info.pickle', 'rb') as usr_file:
                 exist_usr_info = pickle.load(usr_file)
             if np != npf:
                 tk.messagebox.showerror(title='Error', message='输入的两次密码不一致!')
@@ -103,7 +109,7 @@ class Iting:
                 tk.messagebox.showerror(title='Error', message='该用户名已经被注册!')
             else:
                 exist_usr_info[nn] = np
-                with open('usrs_info.pickle', 'wb') as usr_file:
+                with open('./usrs_info.pickle', 'wb') as usr_file:
                     pickle.dump(exist_usr_info, usr_file)
                 tk.messagebox.showinfo(title='Successful', message='注册成功!')
                 window_sign_up.destroy()
@@ -145,10 +151,13 @@ class Iting:
                         rate=RATE,
                         input=True,
                         frames_per_buffer=CHUNK)
+        print('开始录音, 请说话...')
         frames = []
         for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
             data = stream.read(CHUNK)
             frames.append(data)
+
+        print('录音结束, 请闭嘴...')
 
         stream.stop_stream()
         stream.close()
@@ -161,11 +170,16 @@ class Iting:
         wf.writeframes(b''.join(frames))
         wf.close()
 
+
     def get_file_content(self, filePath):
         with open(filePath, 'rb') as fp:
             return fp.read()
 
     def tuling(self):
+
+        # 开始说话
+        self.record_wave()
+
         res = aipSpeech.asr(self.get_file_content(WAVE_OUTPUT_FILENAME), 'wav', 16000, {'lan': 'zh', })
         if res["err_msg"] == "success.":
             tk.Label(usr_window, text=res["result"][0]).place(x=100, y=250)
@@ -219,7 +233,7 @@ class Iting:
 
 if __name__ == '__main__':
     # create admin user
-    with open('usrs_info.pickle', 'wb') as fp:
+    with open('./usrs_info.pickle', 'wb') as fp:
         usrs_info = {'admin': 'admin'}
         pickle.dump(obj=usrs_info, file=fp)
 

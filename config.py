@@ -7,6 +7,7 @@
 # @Software: PyCharm Community Edition
 
 import pyaudio
+
 APP_ID = '15179831'
 API_KEY = 'R93YzrozkK8VLeACtVGm4wMc'
 SECRET_KEY = 'jGHEw8v29Tr5UFuQTokQLKMI8yTXPpMM'
