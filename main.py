@@ -28,7 +28,7 @@ class Iting:
 
         # home window
         self.home_window = tk.Tk()
-        self.home_window.title('iTing v0.0.1')
+        self.home_window.title('Welcome to iTing')
         self.home_window.geometry('450x300')
 
         # welcome image
@@ -67,13 +67,12 @@ class Iting:
 
         except FileNotFoundError as e:
                 print("Error reson: ", e)
-                """
-                with open('./usrs_info.pickle', 'wb') as fp:
-                    usrs_info = {'a': 'a'}
-                    # 将usrs_info封装到usrs.info.pickle文件里
-                    pickle.dump(obj=usrs_info, file=fp)  # obj表示要封装的对象, file表示obj要写入的对象, file必须以wb形式打开
-                    print(usrs_info)		
-                """
+                # with open('./usrs_info.pickle', 'wb') as fp:
+                #     usrs_info = {'a': 'a'}
+                #     # 将usrs_info封装到usrs.info.pickle文件里
+                #     pickle.dump(obj=usrs_info, file=fp)  # obj表示要封装的对象, file表示obj要写入的对象, file必须以wb形式打开
+                #     print(usrs_info)
+
 
         if usr_name == '' or usr_pwd == '':
             messagebox.showerror(title='Error', message='用户名或密码不能为空!')
@@ -185,7 +184,8 @@ class Iting:
         if res["err_msg"] == "success.":
             tk.Label(usr_window, text=res["result"][0]).place(x=100, y=250)
             cont = requests.get('http://www.tuling123.com/openapi/api?key=' + TULING_APIKEY + '&info=%s' % (res["result"][0],), timeout=30).content
-            m = json.loads(cont)
+            # m = json.loads(cont)
+            m = eval(cont)
             var = m['text']
             #tk.Label(usr_window, text=var).pack()
             lb.insert(0, var)
@@ -206,7 +206,9 @@ class Iting:
         })
 
         if not isinstance(result, dict):
-            filename = tempfile.TemporaryFile(mode='w+').name + '.mp3'
+            # tempfile.TemporaryFile(mode='w+').name + '.mp3' 导致如下错误
+            # TypeError: unsupported operand type(s) for +: 'int' and 'str'
+            filename = str(tempfile.TemporaryFile(mode='w+').name) + '.mp3'
             with open(filename, 'wb+') as f:
                 f.write(result)
                 f.close()
