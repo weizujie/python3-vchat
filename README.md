@@ -1,6 +1,6 @@
 # iTing 
 
-**基于 Python + Tkinter 的智能语音聊天程序**
+**基于 Python3 + Tkinter 的智能语音聊天程序**
 
 ## TODO-LIST
 - [x] 用户登录
@@ -13,7 +13,26 @@
 - [ ] 实时语音对话
 - [ ] 停止实时语音对话
 
+# 使用方法
+> 推荐使用 Anaconda
 
+1, 首先把这个仓库 clone 下来 
+```
+$ git clone https://github.com/FatTig3R/iTing.git
+```
+2, 安装一些必要的库
+```
+$ pip install pygame
+$ pip install pyaudio
+$ pip install baidu-aip 
+```
+
+3, 运行
+```
+python3 main.py
+```
+
+不出意外的话就可以正常使用了
 
 # 更新日记
 2019年02月21日     修正了一些代码上的错误
