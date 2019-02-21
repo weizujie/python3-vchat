@@ -1,0 +1,5 @@
+PyAudio==0.2.11
+baidu-aip==2.2.12.0
+requests==2.14.2
+numpy==1.16.1
+pygame==1.9.4
