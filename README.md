@@ -22,9 +22,7 @@ $ git clone https://github.com/FatTig3R/iTing.git
 ```
 2, 安装一些必要的库
 ```
-$ pip install pygame
-$ pip install pyaudio
-$ pip install baidu-aip 
+pip install -r requirements.txt
 ```
 
 3, 运行
