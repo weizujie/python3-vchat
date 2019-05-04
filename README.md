@@ -1,6 +1,6 @@
-# iTing 
+# 智障语音聊天程序
 
-**基于 Python3 + Tkinter 的智能语音聊天程序**
+**使用 Python3 和 Tkinter 编写的智障语音聊天程序**
 
 ## TODO-LIST
 - [x] 用户登录
@@ -18,7 +18,7 @@
 
 1, 首先把这个仓库 clone 下来 
 ```
-$ git clone https://github.com/FatTig3R/iTing.git
+$ git clone https://github.com/FatTig3R/PyVoiceChat.git
 ```
 2, 安装一些必要的库
 ```
@@ -42,7 +42,6 @@ python3 main.py
 2019年02月04日     做成图形界面
 
 2019年02月02日     加入图灵机器人
-
 
 
 
